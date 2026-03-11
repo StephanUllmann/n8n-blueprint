@@ -20,8 +20,16 @@ services:
         value: postgresdb
 
       # Neon requires SSL for connections
-      - key: DB_POSTGRESDB_SSL
+      - key: PORT
+        value: '5678'
+
+      # The CORRECT variable to enable SSL for Postgres in n8n
+      - key: DB_POSTGRESDB_SSL_ENABLED
         value: 'true'
+
+      # Prevents certificate chain errors between the Docker image and Neon
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: 'false'
 
       # Default Postgres port
       - key: DB_POSTGRESDB_PORT
