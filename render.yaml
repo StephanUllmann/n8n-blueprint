@@ -1,0 +1,40 @@
+services:
+  - type: web
+    plan: free
+    # This is the runtime for services that pull a prebuilt Docker image
+    runtime: image
+    # You can give the service any name
+    name: n8n-service
+    image:
+      # Pulls the n8n image tagged as latest from Docker Hub
+      url: docker.io/n8nio/n8n:latest
+
+    # All environment variables defined below are required!
+    envVars:
+      # Generates a base64-encoded key for encrypting credentials in n8n
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+
+      # Tell n8n we are using Postgres
+      - key: DB_TYPE
+        value: postgresdb
+
+      # Neon requires SSL for connections
+      - key: DB_POSTGRESDB_SSL
+        value: 'true'
+
+      # Default Postgres port
+      - key: DB_POSTGRESDB_PORT
+        value: '5432'
+
+      # Neon connection details.
+      # `sync: false` means Render won't look for these values in this file.
+      # You will input them securely in the Render Dashboard after deployment.
+      - key: DB_POSTGRESDB_DATABASE
+        sync: false
+      - key: DB_POSTGRESDB_HOST
+        sync: false
+      - key: DB_POSTGRESDB_PASSWORD
+        sync: false
+      - key: DB_POSTGRESDB_USER
+        sync: false
